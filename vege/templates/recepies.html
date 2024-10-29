@@ -1,0 +1,78 @@
+{% extends "base.html" %} 
+{% block start %}
+<div class="container mt-5">
+  <form
+    class="col-md-6 col-10 mx-auto card p-4 shadow-lg rounded-3 bg-light"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %}
+    <h2 class="text-center text-primary mb-4">Add a New Recipe</h2>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label fw-bold">Recipe Name</label>
+      <input name="receipe_name" required type="text" class="form-control rounded-pill" placeholder="Enter recipe name"/>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label fw-bold">Recipe Description</label>
+      <textarea
+        name="receipe_description"
+        required
+        class="form-control rounded-3"
+        rows="4"
+        placeholder="Describe the recipe"
+      ></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label fw-bold">Recipe Image</label>
+      <input name="receipe_image" type="file" class="form-control rounded-pill" />
+    </div>
+    <button type="submit" class="btn btn-success w-100 rounded-pill py-2">Add Recipe</button>
+  </form>
+
+  <hr class="mt-5">
+
+  <!-- Search Form -->
+  <div class="mt-5">
+    <div class="mx-auto col-md-6 col-10">
+      <form class="d-flex">
+        <input
+          name="search"
+          type="text"
+          class="form-control rounded-pill shadow-sm me-2"
+          placeholder="Search for a recipe"
+        />
+        <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Recipe Table -->
+  <table class="table table-hover mt-5 align-middle shadow-sm">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Recipe Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Image</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white">
+      {% for receipe in receipes %}
+      <tr class="align-middle">
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ receipe.receipe_name }}</td>
+        <td>{{ receipe.receipe_description }}</td>
+        <td>
+          <img src="/media/{{ receipe.receipe_image }}" class="img-thumbnail" style="width: 200px; height: 100px; object-fit: cover;">
+        </td>
+        <td>
+          <a href="{% url 'delete_receipe' receipe.id %}" class="btn btn-danger m-2 rounded-pill shadow-sm">Delete</a>
+          <a href="{% url 'update_receipe' receipe.id %}" class="btn btn-success rounded-pill shadow-sm">Update</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

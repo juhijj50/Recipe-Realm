@@ -1,0 +1,50 @@
+{% extends "base.html" %} 
+{% block start %}
+<div class="container mt-5">
+  <form
+    class="col-md-6 col-10 mx-auto card p-4 shadow-lg rounded-3 bg-light"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %}
+    <h2 class="text-center text-primary mb-4">Update Recipe</h2>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label fw-bold">Recipe Name</label>
+      <input 
+        name="receipe_name" 
+        value="{{ receipe.receipe_name }}" 
+        required 
+        type="text" 
+        class="form-control rounded-pill shadow-sm"
+        placeholder="Enter updated recipe name"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label fw-bold">Recipe Description</label>
+      <textarea
+        name="receipe_description" 
+        required
+        class="form-control rounded-3 shadow-sm"
+        rows="4"
+        placeholder="Update the recipe description"
+      >{{ receipe.receipe_description }}</textarea>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label fw-bold">Recipe Image</label>
+      <input 
+        name="receipe_image" 
+        type="file" 
+        class="form-control rounded-pill shadow-sm"
+      />
+      <!-- Display current image -->
+      {% if receipe.receipe_image %}
+      <div class="mt-3">
+        <label class="form-label">Current Image:</label>
+        <img src="/media/{{ receipe.receipe_image }}" class="img-thumbnail" style="width: 150px; height: 150px; object-fit: cover;" alt="Recipe Image">
+      </div>
+      {% endif %}
+    </div>
+    <button type="submit" class="btn btn-success w-100 rounded-pill py-2 shadow-sm">Update Recipe</button>
+  </form>
+</div>
+{% endblock %}
