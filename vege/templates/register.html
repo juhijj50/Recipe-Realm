@@ -1,0 +1,59 @@
+{% extends "base.html" %} {% block start %}
+<div class="container mt-5">
+  <form
+    class="col-md-6 col-10 mx-auto card p-4 shadow-lg rounded-3 bg-light"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %}
+    {% if messages %}
+    {{ message.tags }}
+    <div class="alert alert-primary" role="alert">
+        {% for message in messages %}
+        {{ message }}{% endfor %}
+      </div>
+
+{% endif %}
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">First name</label>
+      <input
+        type="text"
+        name="first_name"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+      />
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Last name</label>
+        <input
+          type="text"
+          name="last_name"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Username</label>
+        <input
+          type="text"
+          name="username"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+        />
+      </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input type="password" name="password" class="form-control" id="exampleInputPassword1" />
+    </div>
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div>
+    <p>Already have an account? <a href="/login/">Login</a></p>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+{% endblock %}

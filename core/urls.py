@@ -13,6 +13,8 @@ urlpatterns = [
     path('update-receipe/<id>/',update_receipe,name="update_receipe"),
     path('contact/', contact, name='contact'),
     path('about/', about, name='about'),
+    path('login/', login_page, name='login_page'),
+    path('register/', register_page, name='register_page'),
     path('success_page/', success_page, name="success_page"),  # Fixed typo
     path('admin/', admin.site.urls),
 ]
