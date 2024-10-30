@@ -20,6 +20,18 @@
     </style>
   </head>
 <body>
+  {% if user.is_authenticated %}
+  <nav class="navbar p-3 bg-danger shadow-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white fw-bold text-uppercase">Recipe Realm</a>
+      <form class="d-flex" role="search">
+        <a href="/logout/" class="btn btn-success rounded-pill px-4" type="submit">Logout</a>
+      </form>
+    </div>
+  </nav>
+{% endif %}
+
+  
   {% block start %}
 
    {% endblock %}

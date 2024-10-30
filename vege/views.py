@@ -3,8 +3,11 @@ from .models import Receipe
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required 
 
 # Create your views here.
+@login_required(login_url="/login/")
 def receipes(request):
     if request.method == "POST":
         data = request.POST
@@ -34,6 +37,7 @@ def receipes(request):
 
     return render(request, 'recepies.html', context)
 
+@login_required(login_url="/login/")
 def update_receipe(request, id):
     receipe = Receipe.objects.get(id=id)
     if request.method == "POST":
@@ -54,13 +58,35 @@ def update_receipe(request, id):
     context = {'receipe': receipe}
     return render(request, 'update_receipes.html', context)
 
+@login_required(login_url="/login/")
 def delete_receipe(request, id):
     receipe = Receipe.objects.get(id=id)  # This will return a 404 if not found
     receipe.delete()
     return redirect('recepies')
 
 def login_page(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        if not User.objects.filter(username=username).exists():
+            messages.error(request, 'Invalid Username')
+            return redirect('/login/')
+
+        user = authenticate(username=username, password=password)
+
+        if user is None:
+            messages.error(request, 'Invalid password')
+            return redirect('/login/')
+        else:
+            login(request,user)
+            return redirect('/recepies/')
+
     return render(request, 'login.html')
+
+def logout_page(request):
+    logout(request)
+    return redirect('/login/')
 
 def register_page(request):
     
